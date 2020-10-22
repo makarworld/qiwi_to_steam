@@ -7,17 +7,18 @@ def load_settings() -> dict:
     try:
         with open('settings.txt', 'r', encoding='utf-8') as f:
             cfg = json.load(f)
-        if cfg['amount'] < 10:
-            raise InvalidAmount("Wrong amount. Min amount is 10.")
-        elif cfg['qiwi_api'] == "":
-            raise InvalidApi("Wrong api.")
-        return cfg
-
     except FileNotFoundError:
         config = {"amount": 10, "qiwi_api": ""}
         with open('settings.txt', 'w', encoding='utf-8') as f:
             json.dump(config, f, indent=4)
         raise InvalidSettings("Fill settings.txt")
+        
+    if cfg['amount'] < 10:
+        raise InvalidAmount("Wrong amount. Min amount is 10.")
+    elif cfg['qiwi_api'] == "":
+        raise InvalidApi("Wrong api.")
+        
+    return cfg
 
 def send_steam(login: str) -> dict:
     s = requests.Session()
@@ -38,14 +39,17 @@ def load_accs() -> list:
     try:
         with open('accs_for_dep.txt', 'r', encoding='utf-8') as f:
             accs = f.readlines()
-            if accs != []:
-               accs = [x.split(':')[0] for x in accs]
-            else:
-                raise AccsNotFound("Fill accs_for_dep.txt")
-            return accs
     except FileNotFoundError:
         open('accs_for_dep.txt', 'w', encoding='utf-8')
         raise AccsNotFound("Fill accs_for_dep.txt")
+        
+    if accs != []:
+        accs = [x.split(':')[0] for x in accs]
+    else:
+        raise AccsNotFound("Fill accs_for_dep.txt")
+        
+    return accs
+
 
 cfg = load_settings()
 accs = load_accs()
