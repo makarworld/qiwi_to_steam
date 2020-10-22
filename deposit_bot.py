@@ -3,13 +3,14 @@ import time
 import json
 from exceptions import *
 
-
 def load_settings() -> dict:
     try:
         with open('settings.txt', 'r', encoding='utf-8') as f:
             cfg = json.load(f)
         if cfg['amount'] < 10:
             raise InvalidAmount("Wrong amount. Min amount is 10.")
+        elif cfg['qiwi_api'] == "":
+            raise InvalidApi("Wrong api.")
         return cfg
 
     except FileNotFoundError:
@@ -43,8 +44,7 @@ def load_accs() -> list:
                 raise AccsNotFound("Fill accs_for_dep.txt")
             return accs
     except FileNotFoundError:
-        with open('accs_for_dep.txt', 'w', encoding='utf-8') as f:
-            pass
+        open('accs_for_dep.txt', 'w', encoding='utf-8')
         raise AccsNotFound("Fill accs_for_dep.txt")
 
 cfg = load_settings()
@@ -53,10 +53,8 @@ accs = load_accs()
 PAYMENT = cfg['amount']
 API_TOKEN = cfg['qiwi_api']
 
-if API_TOKEN == "":
-    raise InvalidApi("Wrong api.")
-
-print("Payment amount: {}\nCount accounts: {}".format(str(PAYMENT), str(len(accs))))
+print("Payment amount: {}\n"\
+      "Count accounts: {}".format(str(PAYMENT), str(len(accs))))
 
 input("Press Enter for continue...")
 
