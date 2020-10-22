@@ -1,4 +1,4 @@
 {
     "amount": 10,
-    "qiwi_api": "33"
+    "qiwi_api": ""
 }
