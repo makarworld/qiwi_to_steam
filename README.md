@@ -15,7 +15,7 @@ Press Enter and money will be send to your steam accounts, without sms.
 В accs_for_dep.txt вписываете логины для депозита.
 В начале каждой строки должен быть логин, отделённый от других данных двоеточием.
 
-В settings.txt записываете сумму платежа в Among и апи токен в qiwi_api
+В settings.txt записываете сумму платежа в amount и апи токен в qiwi_api
 
 После открываете deposit_bot.exe или deposit_bot.py (В зависимости от скачанной версии)
 Подтверждаете пополнение, нажав Enter, и деньги поступят на ваши аккаунты.
